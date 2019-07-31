@@ -1,5 +1,5 @@
 export default ({Sequelize, db}) => {
-    const Admin = db.define('admin', {
+    const Ward = db.define('ward', {
         id: {
             type: Sequelize.INTEGER,
             autoIncrement: true,
@@ -10,20 +10,32 @@ export default ({Sequelize, db}) => {
             type: Sequelize.STRING,
             allowNull: false,
         },
-        email: {
-            type: Sequelize.STRING,
-            allowNull: false,
-            unique: true,
-        },
-        phone: {
+        age: {
             type: Sequelize.STRING,
             allowNull: false,
         },
-        password: {
+        imageUrl: {
             type: Sequelize.STRING,
+            allowNull: false,
+        },
+        school: {
+            type: Sequelize.STRING,
+            allowNull: false,
+        },
+        origin: {
+            type: Sequelize.STRING,
+            allowNull: false,
+        },
+        date_admitted: {
+            type: Sequelize.STRING,
+            allowNull: false,
+        },
+        adopted: {
+            type: Sequelize.BOOLEAN,
+            default: false,
             allowNull: false,
         },
     });
 
-    return Admin;
+    return Ward;
 };

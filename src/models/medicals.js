@@ -1,29 +1,35 @@
-export default ({Sequelize, db}) => {
-    const Admin = db.define('admin', {
+export default ({Sequelize, db, Ward}) => {
+    const Medical = db.define('medical', {
         id: {
             type: Sequelize.INTEGER,
             autoIncrement: true,
             allowNull: false,
             primaryKey: true,
         },
-        name: {
+        weight: {
             type: Sequelize.STRING,
             allowNull: false,
         },
-        email: {
+        height: {
             type: Sequelize.STRING,
             allowNull: false,
+        },
+        blood_group: {
+            type: Sequelize.STRING,
+            allowNull: false,
+        },
+        genotype: {
+            type: Sequelize.STRING,
+            allowNull: false,
+        },
+        wardId: {
+            type: Sequelize.INTEGER,
             unique: true,
-        },
-        phone: {
-            type: Sequelize.STRING,
-            allowNull: false,
-        },
-        password: {
-            type: Sequelize.STRING,
             allowNull: false,
         },
     });
 
-    return Admin;
+    Medical.belongsTo(Ward, {constraints: true, onDelete: 'CASCADE'});
+
+    return Medical;
 };

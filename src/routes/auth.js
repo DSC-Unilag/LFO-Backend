@@ -1,18 +1,18 @@
-import AdminController from "../controllers/admin";
-import AuthController from "../controllers/auth";
+import AdminController from '../controllers/admin';
+import AuthController from '../controllers/auth';
 
-export default ({ express, AdminModel, jwt, bcrypt }) => {
-	const authController = AuthController({ jwt });
-	const adminController = AdminController({
-		AdminModel,
-		bcrypt,
-		authController
+export default ({express, AdminModel, jwt, bcrypt, trimRequest}) => {
+    const authController = AuthController({jwt});
+    const adminController = AdminController({
+        AdminModel,
+        bcrypt,
+        authController,
     });
-	const router = express.Router();
+    const router = express.Router();
 
-	router.post("/signup", adminController.adminSignup);
+    router.post('/signup', trimRequest.body, adminController.adminSignup);
 
-    router.post("/login", adminController.adminLogin);
-    
-	return router;
+    router.post('/login', trimRequest.body, adminController.adminLogin);
+
+    return router;
 };
