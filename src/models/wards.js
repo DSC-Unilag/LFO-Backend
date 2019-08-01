@@ -36,6 +36,5 @@ export default ({Sequelize, db}) => {
             allowNull: false,
         },
     });
-
     return Ward;
 };

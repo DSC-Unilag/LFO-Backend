@@ -20,6 +20,7 @@ import wards from './models/wards';
 import medicals from './models/medicals';
 import visitors from './models/visitors';
 import resources from './models/resources';
+import timeline from './models/timeline';
 
 //Routes
 import authRouter from './routes/auth';
@@ -27,6 +28,7 @@ import wardRouter from './routes/wards';
 import donationRouter from './routes/donations';
 import visitorRouter from './routes/visitors';
 import resourceRouter from './routes/resources';
+import timelineRouter from './routes/timelines';
 
 dotenv.config();
 
@@ -71,6 +73,12 @@ const visitorModel = visitors({
 const resourceModel = resources({
     Sequelize,
     db,
+});
+
+const timelineModel = timeline({
+    Sequelize,
+    db,
+    Ward: wardModel,
 });
 
 // Cloudinary Config
@@ -139,6 +147,16 @@ app.use(
 
 app.use(`${URL_PREFIX}/endpoints`, (req, res) =>
     res.status(200).json(listEndpoints(app))
+);
+
+app.use(
+    `${URL_PREFIX}/timelines`,
+    timelineRouter({
+        express,
+        TimelineModel: timelineModel,
+        WardModel: wardModel,
+        cloudinary,
+    })
 );
 
 // catch 404 and forward to error handler
