@@ -1,4 +1,4 @@
-import DonationsController from '../controllers/donate';
+import DonationsController from '../controllers/donations';
 
 export default({ express }) => {
     const donationsController = DonationsController();
