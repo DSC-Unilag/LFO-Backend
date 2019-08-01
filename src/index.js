@@ -21,6 +21,7 @@ import medicals from './models/medicals';
 import visitors from './models/visitors';
 import resources from './models/resources';
 import timeline from './models/timeline';
+import donations from './models/donations';
 
 //Routes
 import authRouter from './routes/auth';
@@ -70,7 +71,7 @@ const visitorModel = visitors({
     db,
 });
 
-const resourceModel = resources({
+const donationsModel = donations({
     Sequelize,
     db,
 });
@@ -118,11 +119,13 @@ app.use((req, res, next) => {
     next();
 });
 
+// Auth
 app.use(
     `${URL_PREFIX}/auth`,
     authRouter({express, AdminModel: adminModel, jwt, bcrypt, trimRequest})
 );
 
+// Wards Route
 app.use(
     `${URL_PREFIX}/wards`,
     wardRouter({
@@ -134,15 +137,16 @@ app.use(
     })
 );
 
+// Visitors
 app.use(
     `${URL_PREFIX}/visitors`,
     visitorRouter({express, VisitorModel: visitorModel})
 );
 
-app.use(`${URL_PREFIX}/donations`, donationRouter({express}));
+// Donations
 app.use(
-    `${URL_PREFIX}/resources`,
-    resourceRouter({express, resourceModel: resourceModel})
+    `${URL_PREFIX}/donations`,
+    donationRouter({express, DonationsModel: donationsModel})
 );
 
 app.use(`${URL_PREFIX}/endpoints`, (req, res) =>
