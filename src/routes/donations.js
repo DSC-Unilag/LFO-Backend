@@ -1,12 +1,12 @@
 import DonationsController from '../controllers/donations';
 
-export default({ express }) => {
+export default ({express}) => {
     const donationsController = DonationsController();
     const router = express.Router();
 
-    router.get("/", donationsController.getDonations);
+    router.get('/', donationsController.getDonations);
 
-    router.post("/", donationsController.addDonationRecord);
+    router.post('/', donationsController.addDonationRecord);
 
     return router;
 };
