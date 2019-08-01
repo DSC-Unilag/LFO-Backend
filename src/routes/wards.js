@@ -1,34 +1,34 @@
-import WardController from "../controllers/wards";
+import WardController from '../controllers/wards';
 
 export default ({
-	express,
-	WardModel,
-	MedicalModel,
-	cloudinary,
-	trimRequest
+    express,
+    WardModel,
+    MedicalModel,
+    cloudinary,
+    trimRequest,
 }) => {
-	const wardController = WardController({
-		WardModel,
-		MedicalModel,
-		cloudinary
-	});
-	const router = express.Router();
+    const wardController = WardController({
+        WardModel,
+        MedicalModel,
+        cloudinary,
+    });
+    const router = express.Router();
 
-    router.get("/", wardController.getAllWards);
-    
-    router.get("/adopted", wardController.getAdoptedWards);
+    router.get('/', wardController.getAllWards);
 
-	router.get("/:id", wardController.getSingleWard);
+    router.get('/adopted', wardController.getAdoptedWards);
 
-	router.post("/", trimRequest.body, wardController.addWard);
+    router.get('/:id', wardController.getSingleWard);
 
-	router.put(
-		"/:id/adopt",
-		trimRequest.body,
-		wardController.updateAdoptionStatus
-	);
+    router.post('/', trimRequest.body, wardController.addWard);
 
-	router.delete("/:id", wardController.deleteWard);
+    router.put(
+        '/:id/adopt',
+        trimRequest.body,
+        wardController.updateAdoptionStatus
+    );
 
-	return router;
+    router.delete('/:id', wardController.deleteWard);
+
+    return router;
 };

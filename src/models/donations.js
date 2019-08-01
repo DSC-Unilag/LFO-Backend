@@ -1,16 +1,20 @@
 export default ({Sequelize, db}) => {
-    const Visitor = db.define('visitor', {
+    const Donations = db.define('donations', {
         id: {
             type: Sequelize.INTEGER,
             autoIncrement: true,
             allowNull: false,
             primaryKey: true,
         },
-        fullName: {
+        name: {
             type: Sequelize.STRING,
             allowNull: false,
         },
-        email: {
+        amount: {
+            type: Sequelize.INTEGER,
+            allowNull: false,
+        },
+        description: {
             type: Sequelize.STRING,
             allowNull: false,
         },
@@ -18,15 +22,7 @@ export default ({Sequelize, db}) => {
             type: Sequelize.STRING,
             allowNull: false,
         },
-        date: {
-            type: Sequelize.STRING,
-            allowNull: false,
-        },
-        description: {
-            type: Sequelize.STRING,
-            allowNull: false,
-        },
     });
 
-    return Visitor;
+    return Donations;
 };
