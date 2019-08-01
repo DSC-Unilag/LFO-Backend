@@ -16,14 +16,12 @@ export default ({Sequelize, db, Ward}) => {
         },
         wardId: {
             type: Sequelize.INTEGER,
-            unique: true,
             allowNull: false,
         },
         createdAt: Sequelize.DATEONLY,
         updatedAt: Sequelize.DATEONLY,
     });
-
-    Ward.hasMany(Timeline, {constraints: true, onDelete: 'CASCADE'});
     Timeline.belongsTo(Ward, {constraints: true, onDelete: 'CASCADE'});
+    Ward.hasMany(Timeline, {constraints: true, onDelete: 'CASCADE'});
     return Timeline;
 };

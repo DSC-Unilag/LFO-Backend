@@ -7,7 +7,7 @@ export default ({VisitModel}) => {
             return res.status(200).json({
                 status: 'success',
                 message: 'Found the Data!!',
-                data: visits
+                data: visits,
             });
         } catch (error) {
             return handleApiError(res, error);
@@ -16,18 +16,18 @@ export default ({VisitModel}) => {
 
     const addVisitsRecord = async (req, res) => {
         try {
-            const { fullName, organization, phone, date, description } = req.body;
+            const {fullName, organization, phone, date, description} = req.body;
             const visits = await VisitModel.create({
-                fullName, 
-                organization, 
-                phone, 
-                date, 
-                description
+                fullName,
+                organization,
+                phone,
+                date,
+                description,
             });
             return res.status(201).json({
                 status: 'success',
                 message: 'retrieved the donations records.',
-                data: visits
+                data: visits,
             });
         } catch (error) {
             return handleApiError(res, error);

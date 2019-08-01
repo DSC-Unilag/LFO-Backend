@@ -22,7 +22,7 @@ import visitors from './models/visitors';
 import resources from './models/resources';
 import timeline from './models/timeline';
 import donations from './models/donations';
-import visits  from './models/visits.js';
+import visits from './models/visits.js';
 
 //Routes
 import authRouter from './routes/auth';
@@ -31,6 +31,7 @@ import donationRouter from './routes/donations';
 import visitorRouter from './routes/visitors';
 import resourceRouter from './routes/resources';
 import timelineRouter from './routes/timelines';
+import visitsRouter from './routes/visits';
 
 dotenv.config();
 
@@ -68,6 +69,11 @@ const medicalModel = medicals({
 });
 
 const visitorModel = visitors({
+    Sequelize,
+    db,
+});
+
+const visitsModel = visitors({
     Sequelize,
     db,
 });
