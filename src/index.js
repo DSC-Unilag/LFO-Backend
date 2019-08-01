@@ -22,6 +22,7 @@ import visitors from './models/visitors';
 import resources from './models/resources';
 import timeline from './models/timeline';
 import donations from './models/donations';
+import visits  from './models/visits.js';
 
 //Routes
 import authRouter from './routes/auth';
@@ -147,6 +148,12 @@ app.use(
 app.use(
     `${URL_PREFIX}/donations`,
     donationRouter({express, DonationsModel: donationsModel})
+);
+
+// Visits
+app.use(
+    `${URL_PREFIX}/visits`,
+    visitsRouter({express, VisitModel: visitsModel})
 );
 
 app.use(`${URL_PREFIX}/endpoints`, (req, res) =>
