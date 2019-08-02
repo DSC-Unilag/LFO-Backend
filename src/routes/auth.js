@@ -1,18 +1,32 @@
 import AdminController from '../controllers/admin';
-import AuthController from '../controllers/auth';
+import AuthMiddleware from '../controllers/auth';
+import AdminMiddleware from '../middlewares/admin';
 
-export default ({express, AdminModel, jwt, bcrypt, trimRequest}) => {
-    const authController = AuthController({jwt});
+export default ({express, AdminModel, jwt, bcrypt, trimRequest, joi}) => {
+    const authMiddleware = AuthMiddleware({jwt});
+    const adminMiddleware = AdminMiddleware({joi});
     const adminController = AdminController({
         AdminModel,
         bcrypt,
-        authController,
+        authMiddleware,
     });
     const router = express.Router();
 
-    router.post('/signup', trimRequest.body, adminController.adminSignup);
+    router.post(
+        '/signup',
+        adminMiddleware.validateSignUp,
+        trimRequest.body,
+        authMiddleware.signAdminToken,
+        adminController.adminSignup
+    );
 
-    router.post('/login', trimRequest.body, adminController.adminLogin);
+    router.post(
+        '/login',
+        adminMiddleware.validateLogin,
+        trimRequest.body,
+        authMiddleware.verifyToken,
+        adminController.adminLogin
+    );
 
     return router;
 };

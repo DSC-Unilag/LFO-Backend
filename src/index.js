@@ -21,7 +21,7 @@ import wards from './models/wards';
 import medicals from './models/medicals';
 import visitors from './models/visitors';
 import resources from './models/resources';
-import timeline from './models/timeline';
+import timelines from './models/timeline';
 import donations from './models/donations';
 import visits from './models/visits.js';
 
@@ -33,15 +33,6 @@ import visitorRouter from './routes/visitors';
 import resourceRouter from './routes/resources';
 import timelineRouter from './routes/timelines';
 import visitsRouter from './routes/visits';
-
-//Middleware
-import authMiddleware from './middlewares/admin';
-import wardMiddleware from './middlewares/ward';
-import timelineMiddleware from './middlewares/timeline';
-import resouceMiddleware from './middlewares/resources';
-import donationMiddleware from './middlewares/donation';
-import visitorMiddleware from './middlewares/visitors';
-import visitMiddleware from './middlewares/visit';
 
 dotenv.config();
 
@@ -93,7 +84,12 @@ const donationsModel = donations({
     db,
 });
 
-const timelineModel = timeline({
+const resourcesModel = resources({
+    Sequelize,
+    db,
+});
+
+const timelineModel = timelines({
     Sequelize,
     db,
     Ward: wardModel,
@@ -136,19 +132,10 @@ app.use((req, res, next) => {
     next();
 });
 
-// Middleware
-const AuthMiddleware = authMiddleware({joi});
-const WardMiddleware = wardMiddleware({joi});
-const TimelineMiddleware = timelineMiddleware({joi});
-const ResourceMiddleware = resouceMiddleware({joi});
-const DonationMiddleware = donationMiddleware({joi});
-const VisitorMiddleware = visitorMiddleware({joi});
-const VisitMiddleware = visitMiddleware({joi});
-
 // Auth
 app.use(
     `${URL_PREFIX}/auth`,
-    authRouter({express, AdminModel: adminModel, jwt, bcrypt, trimRequest})
+    authRouter({express, AdminModel: adminModel, jwt, bcrypt, trimRequest, joi})
 );
 
 // Wards Route
@@ -159,6 +146,8 @@ app.use(
         WardModel: wardModel,
         MedicalModel: medicalModel,
         cloudinary,
+        joi,
+        jwt,
         trimRequest,
     })
 );
@@ -166,25 +155,22 @@ app.use(
 // Visitors
 app.use(
     `${URL_PREFIX}/visitors`,
-    visitorRouter({express, VisitorModel: visitorModel})
+    visitorRouter({express, VisitorModel: visitorModel, joi, jwt})
 );
 
 // Donations
 app.use(
     `${URL_PREFIX}/donations`,
-    donationRouter({express, DonationsModel: donationsModel})
+    donationRouter({express, DonationsModel: donationsModel, joi, jwt})
 );
 
 // Visits
 app.use(
     `${URL_PREFIX}/visits`,
-    visitsRouter({express, VisitModel: visitsModel})
+    visitsRouter({express, VisitModel: visitsModel, joi, jwt})
 );
 
-app.use(`${URL_PREFIX}/endpoints`, (req, res) =>
-    res.status(200).json(listEndpoints(app))
-);
-
+// Timeline
 app.use(
     `${URL_PREFIX}/timelines`,
     timelineRouter({
@@ -192,7 +178,24 @@ app.use(
         TimelineModel: timelineModel,
         WardModel: wardModel,
         cloudinary,
+        joi,
+        jwt,
     })
+);
+
+// Resource
+app.use(
+    `${URL_PREFIX}/timelines`,
+    resourceRouter({
+        express,
+        ResouceModel: timelineModel,
+        joi,
+        jwt,
+    })
+);
+
+app.use(`${URL_PREFIX}/endpoints`, (req, res) =>
+    res.status(200).json(listEndpoints(app))
 );
 
 // catch 404 and forward to error handler
