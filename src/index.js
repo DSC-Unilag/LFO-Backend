@@ -20,12 +20,14 @@ import wards from './models/wards';
 import medicals from './models/medicals';
 import visitors from './models/visitors';
 import donations from './models/donations';
+import visits  from './models/visits.js';
 
 //Routes
 import authRouter from './routes/auth';
 import wardRouter from './routes/wards';
 import donationRouter from './routes/donations';
 import visitorRouter from './routes/visitors';
+import visitsRouter from './routes/visits';
 
 dotenv.config();
 
@@ -71,6 +73,11 @@ const donationsModel = donations({
     Sequelize,
     db,
 });
+
+const visitsModel = visits({
+    Sequelize,
+    db,
+})
 
 // Cloudinary Config
 const {CLOUDINARY_URL} = process.env;
@@ -137,6 +144,12 @@ app.use(
 app.use(
     `${URL_PREFIX}/donations`,
     donationRouter({express, DonationsModel: donationsModel})
+);
+
+// Visits
+app.use(
+    `${URL_PREFIX}/visits`,
+    visitsRouter({express, VisitModel: visitsModel})
 );
 
 app.use(`${URL_PREFIX}/endpoints`, (req, res) =>
