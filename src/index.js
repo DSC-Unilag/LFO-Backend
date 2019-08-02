@@ -175,10 +175,10 @@ app.use(
 
 // Timeline
 app.use(
-    `${URL_PREFIX}/timelines`,
+    `${URL_PREFIX}/resources`,
     timelineRouter({
         express,
-        TimelineModel: timelineModel,
+        TimelineModel: resourceModel,
         WardModel: wardModel,
         cloudinary,
         joi,
