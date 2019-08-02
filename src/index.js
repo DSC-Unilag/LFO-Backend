@@ -39,7 +39,7 @@ import visitsRouter from './routes/visits';
 dotenv.config();
 
 const URL_PREFIX = '/api/v1';
-const PORT = 7000;
+const PORT = process.env.PORT || 7000;
 
 const db = initializeDbConnection({Sequelize});
 
