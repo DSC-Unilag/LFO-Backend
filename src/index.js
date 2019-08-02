@@ -34,6 +34,8 @@ import resourceRouter from './routes/resources';
 import timelineRouter from './routes/timelines';
 import visitsRouter from './routes/visits';
 
+
+
 dotenv.config();
 
 const URL_PREFIX = '/api/v1';
@@ -132,10 +134,11 @@ app.use((req, res, next) => {
     next();
 });
 
+
 // Auth
 app.use(
     `${URL_PREFIX}/auth`,
-    authRouter({express, AdminModel: adminModel, jwt, bcrypt, trimRequest, joi})
+    authRouter({express, AdminModel: adminModel, jwt, bcrypt, trimRequest, joi  })
 );
 
 // Wards Route
@@ -148,7 +151,7 @@ app.use(
         cloudinary,
         joi,
         jwt,
-        trimRequest,
+        trimRequest
     })
 );
 
@@ -179,7 +182,7 @@ app.use(
         WardModel: wardModel,
         cloudinary,
         joi,
-        jwt,
+        jwt
     })
 );
 
@@ -190,13 +193,15 @@ app.use(
         express,
         ResouceModel: timelineModel,
         joi,
-        jwt,
+        jwt
     })
 );
+
 
 app.use(`${URL_PREFIX}/endpoints`, (req, res) =>
     res.status(200).json(listEndpoints(app))
 );
+
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
