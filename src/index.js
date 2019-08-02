@@ -13,6 +13,7 @@ import initializeDbConnection from './util/db';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import {debugLogger, prettyStringify} from './util/logger/index';
+import joi from '@hapi/joi';
 
 //Models
 import admins from './models/admins';
@@ -32,6 +33,15 @@ import visitorRouter from './routes/visitors';
 import resourceRouter from './routes/resources';
 import timelineRouter from './routes/timelines';
 import visitsRouter from './routes/visits';
+
+//Middleware
+import authMiddleware from './middlewares/admin';
+import wardMiddleware from './middlewares/ward';
+import timelineMiddleware from './middlewares/timeline';
+import resouceMiddleware from './middlewares/resources';
+import donationMiddleware from './middlewares/donation';
+import visitorMiddleware from './middlewares/visitors';
+import visitMiddleware from './middlewares/visit';
 
 dotenv.config();
 
@@ -125,6 +135,15 @@ app.use((req, res, next) => {
     );
     next();
 });
+
+// Middleware
+const AuthMiddleware = authMiddleware({joi});
+const WardMiddleware = wardMiddleware({joi});
+const TimelineMiddleware = timelineMiddleware({joi});
+const ResourceMiddleware = resouceMiddleware({joi});
+const DonationMiddleware = donationMiddleware({joi});
+const VisitorMiddleware = visitorMiddleware({joi});
+const VisitMiddleware = visitMiddleware({joi});
 
 // Auth
 app.use(
