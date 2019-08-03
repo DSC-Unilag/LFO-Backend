@@ -190,18 +190,18 @@ app.use("".concat(URL_PREFIX, "/visits"), (0, _visits2["default"])({
   jwt: _jsonwebtoken["default"]
 })); // Timeline
 
-app.use("".concat(URL_PREFIX, "/resources"), (0, _timelines["default"])({
+app.use("".concat(URL_PREFIX, "/timelines"), (0, _timelines["default"])({
   express: _express["default"],
-  TimelineModel: resourceModel,
+  TimelineModel: timelineModel,
   WardModel: wardModel,
   cloudinary: _cloudinary.v2,
   joi: _joi["default"],
   jwt: _jsonwebtoken["default"]
 })); // Resource
 
-app.use("".concat(URL_PREFIX, "/timelines"), (0, _resources2["default"])({
+app.use("".concat(URL_PREFIX, "/resources"), (0, _resources2["default"])({
   express: _express["default"],
-  ResouceModel: timelineModel,
+  ResouceModel: resourcesModel,
   joi: _joi["default"],
   jwt: _jsonwebtoken["default"]
 }));

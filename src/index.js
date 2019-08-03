@@ -172,10 +172,10 @@ app.use(
 
 // Timeline
 app.use(
-    `${URL_PREFIX}/resources`,
+    `${URL_PREFIX}/timelines`,
     timelineRouter({
         express,
-        TimelineModel: resourceModel,
+        TimelineModel: timelineModel,
         WardModel: wardModel,
         cloudinary,
         joi,
@@ -185,10 +185,10 @@ app.use(
 
 // Resource
 app.use(
-    `${URL_PREFIX}/timelines`,
+    `${URL_PREFIX}/resources`,
     resourceRouter({
         express,
-        ResouceModel: timelineModel,
+        ResouceModel: resourcesModel,
         joi,
         jwt,
     })
