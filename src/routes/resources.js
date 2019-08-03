@@ -1,7 +1,7 @@
 import ResourceController from '../controllers/resources';
 
-export default ({express, resourceModel, goodModel}) => {
-    const resourceController = ResourceController({resourceModel, goodModel});
+export default ({express, resourceModel}) => {
+    const resourceController = ResourceController({resourceModel});
     const router = express.Router();
 
     router.get('/', resourceController.getAllResources);
