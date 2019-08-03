@@ -4,9 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node build/index.js",
+    "build": "ls",
     "dev": "nodemon src/index.js --exec babel-node --presets @babel/preset-env",
-    "build": "babel src --out-dir build",
-    "prebuild": "npm run clean; npm run preetier",
+    "dev-build": "babel src --out-dir build",
+    "prebuild": "npm run clean && npm run preetier",
     "clean": "rm -rf build/*",
     "pretest": "eslint --ignore-path .gitignore src/ --fix",
     "preetier": "prettier --single-quote --tab-width 4 --trailing-comma es5 --print-width 80 --write --no-bracket-spacing src/**/*.js"
