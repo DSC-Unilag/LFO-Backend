@@ -28,7 +28,7 @@ var _default = function _default(_ref) {
   });
   var router = express.Router();
   router.post('/signup', trimRequest.body, adminMiddleware.validateSignUp, adminController.adminSignup);
-  router.post('/login', trimRequest.body, adminMiddleware.validateLogin, authController.verifyToken, adminController.adminLogin);
+  router.post('/login', trimRequest.body, adminMiddleware.validateLogin, adminController.adminLogin);
   return router;
 };
 

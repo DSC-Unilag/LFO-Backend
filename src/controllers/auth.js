@@ -15,7 +15,7 @@ export default ({jwt}) => {
         let token = req.headers['x-access-token'] || req.headers.authorization; // Express headers are auto converted to lowercase
 
         if (!token) {
-            return res.status(400).json({
+            return res.status(401).json({
                 status: 'error',
                 message: 'No Auth Token Provided',
             });

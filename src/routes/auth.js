@@ -28,7 +28,6 @@ export default ({
         '/login',
         trimRequest.body,
         adminMiddleware.validateLogin,
-        authController.verifyToken,
         adminController.adminLogin
     );
 
