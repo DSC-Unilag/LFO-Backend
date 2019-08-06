@@ -14,7 +14,7 @@ export default ({VisitorModel}) => {
             });
             return res.status(201).json({
                 status: 'success',
-                message: 'Visitor visit/details Registered',
+                message: 'Visitor Registered',
                 data: visitor,
             });
         } catch (err) {
