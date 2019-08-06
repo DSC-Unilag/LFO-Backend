@@ -1,9 +1,9 @@
 import {ApiError, handleApiError} from '../util/logger/api';
 
-export default ({resourceModel}) => {
+export default ({ResourceModel}) => {
     const getAllResources = async (req, res) => {
         try {
-            const resources = await resourceModel.findAll();
+            const resources = await ResourceModel.findAll();
             if (resources.length === 0) {
                 throw new ApiError('No resources found', 'server');
             }
@@ -23,7 +23,7 @@ export default ({resourceModel}) => {
             if (!type || !description || !quantity) {
                 throw new ApiError('input the right paramters', 'server');
             }
-            const resource = await resourceModel.create({
+            const resource = await ResourceModel.create({
                 type,
                 description,
                 quantity,
@@ -42,7 +42,7 @@ export default ({resourceModel}) => {
         try {
             const {type, description, quantity} = req.body;
             const {id} = req.params;
-            const resource = await resourceModel.findOne({where: {id}});
+            const resource = await ResourceModel.findOne({where: {id}});
             if (!resource) {
                 throw new ApiError(`not resource with id ${id}`, 'notfound');
             }
@@ -55,7 +55,7 @@ export default ({resourceModel}) => {
                     ? resource.dataValues.quantity
                     : Number(req.body.quantity),
             };
-            await resourceModel.update(
+            await ResourceModel.update(
                 {
                     type: safeResource.type,
                     quantity: safeResource.quantity,
@@ -75,11 +75,11 @@ export default ({resourceModel}) => {
     const deleteSingleResource = async (req, res) => {
         try {
             const {id} = req.params;
-            const resource = await resourceModel.findOne({where: {id}});
+            const resource = await ResourceModel.findOne({where: {id}});
             if (!resource) {
                 throw new ApiError(`not resource with id ${id}`, 'notfound');
             }
-            await resourceModel.destroy({where: {id}});
+            await ResourceModel.destroy({where: {id}});
             return res.status(200).json({
                 status: 'success',
                 message: 'Resource deleted successfully',

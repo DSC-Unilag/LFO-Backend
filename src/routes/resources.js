@@ -1,13 +1,30 @@
-import ResourceController from '../controllers/resources';
+import ResourceController from "../controllers/resources";
 
-export default ({express, resourceModel}) => {
-    const resourceController = ResourceController({resourceModel});
-    const router = express.Router();
+export default ({express, ResourceModel, jwt}) => {
+	const resourceController = ResourceController({ResourceModel});
+	const authMiddleware = AuthMiddleware({jwt});
+	const router = express.Router();
 
-    router.get('/', resourceController.getAllResources);
-    router.post('/', resourceController.addToResources);
-    router.put('/:id', resourceController.updateSingleResource);
-    router.delete('/:id', resourceController.deleteSingleResource);
+	router.get(
+		"/",
+		authMiddleware.verifyToken,
+		resourceController.getAllResources
+	);
+	router.post(
+		"/",
+		authMiddleware.verifyToken,
+		resourceController.addToResources
+	);
+	router.put(
+		"/:id",
+		authMiddleware.verifyToken,
+		resourceController.updateSingleResource
+	);
+	router.delete(
+		"/:id",
+		authMiddleware.verifyToken,
+		resourceController.deleteSingleResource
+	);
 
-    return router;
+	return router;
 };
