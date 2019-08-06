@@ -12,7 +12,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 var _default = function _default(_ref) {
-  var resourceModel = _ref.resourceModel;
+  var ResourceModel = _ref.ResourceModel;
 
   var getAllResources =
   /*#__PURE__*/
@@ -27,7 +27,7 @@ var _default = function _default(_ref) {
             case 0:
               _context.prev = 0;
               _context.next = 3;
-              return resourceModel.findAll();
+              return ResourceModel.findAll();
 
             case 3:
               resources = _context.sent;
@@ -90,7 +90,7 @@ var _default = function _default(_ref) {
 
             case 4:
               _context2.next = 6;
-              return resourceModel.create({
+              return ResourceModel.create({
                 type: type,
                 description: description,
                 quantity: quantity
@@ -140,7 +140,7 @@ var _default = function _default(_ref) {
               _req$body2 = req.body, type = _req$body2.type, description = _req$body2.description, quantity = _req$body2.quantity;
               id = req.params.id;
               _context3.next = 5;
-              return resourceModel.findOne({
+              return ResourceModel.findOne({
                 where: {
                   id: id
                 }
@@ -163,7 +163,7 @@ var _default = function _default(_ref) {
                 quantity: !quantity ? resource.dataValues.quantity : Number(req.body.quantity)
               };
               _context3.next = 11;
-              return resourceModel.update({
+              return ResourceModel.update({
                 type: safeResource.type,
                 quantity: safeResource.quantity,
                 description: safeResource.description
@@ -211,7 +211,7 @@ var _default = function _default(_ref) {
               _context4.prev = 0;
               id = req.params.id;
               _context4.next = 4;
-              return resourceModel.findOne({
+              return ResourceModel.findOne({
                 where: {
                   id: id
                 }
@@ -229,7 +229,7 @@ var _default = function _default(_ref) {
 
             case 7:
               _context4.next = 9;
-              return resourceModel.destroy({
+              return ResourceModel.destroy({
                 where: {
                   id: id
                 }
