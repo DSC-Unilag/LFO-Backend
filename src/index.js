@@ -33,6 +33,9 @@ import resourceRouter from './routes/resources';
 import timelineRouter from './routes/timelines';
 import visitsRouter from './routes/visits';
 
+//Controllers
+import AuthController from './controllers/auth';
+
 dotenv.config();
 
 const URL_PREFIX = '/api/v1';
@@ -94,6 +97,9 @@ const timelineModel = timelines({
     Ward: wardModel,
 });
 
+//Controller Init
+const authController = AuthController({jwt});
+
 // Cloudinary Config
 const {CLOUDINARY_URL} = process.env;
 const cloud_name = CLOUDINARY_URL.split('@')[1];
@@ -134,7 +140,14 @@ app.use((req, res, next) => {
 // Auth
 app.use(
     `${URL_PREFIX}/auth`,
-    authRouter({express, AdminModel: adminModel, jwt, bcrypt, trimRequest, joi})
+    authRouter({
+        express,
+        AdminModel: adminModel,
+        authController,
+        bcrypt,
+        trimRequest,
+        joi,
+    })
 );
 
 // Wards Route
@@ -146,7 +159,7 @@ app.use(
         MedicalModel: medicalModel,
         cloudinary,
         joi,
-        jwt,
+        authController,
         trimRequest,
     })
 );
@@ -154,19 +167,37 @@ app.use(
 // Visitors
 app.use(
     `${URL_PREFIX}/visitors`,
-    visitorRouter({express, VisitorModel: visitorModel, joi, jwt})
+    visitorRouter({
+        express,
+        VisitorModel: visitorModel,
+        trimRequest,
+        joi,
+        authController,
+    })
 );
 
 // Donations
 app.use(
     `${URL_PREFIX}/donations`,
-    donationRouter({express, DonationsModel: donationsModel, joi, jwt})
+    donationRouter({
+        express,
+        DonationsModel: donationsModel,
+        trimRequest,
+        joi,
+        authController,
+    })
 );
 
 // Visits
 app.use(
     `${URL_PREFIX}/visits`,
-    visitsRouter({express, VisitModel: visitsModel, joi, jwt})
+    visitsRouter({
+        express,
+        VisitModel: visitsModel,
+        trimRequest,
+        joi,
+        authController,
+    })
 );
 
 // Timeline
@@ -178,7 +209,8 @@ app.use(
         WardModel: wardModel,
         cloudinary,
         joi,
-        jwt,
+        trimRequest,
+        authController,
     })
 );
 
@@ -189,7 +221,8 @@ app.use(
         express,
         ResouceModel: resourcesModel,
         joi,
-        jwt,
+        trimRequest,
+        authController,
     })
 );
 

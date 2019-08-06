@@ -7,8 +7,6 @@ exports["default"] = void 0;
 
 var _donations = _interopRequireDefault(require("../controllers/donations"));
 
-var _auth = _interopRequireDefault(require("../controllers/auth"));
-
 var _donation = _interopRequireDefault(require("../middlewares/donation"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
@@ -16,20 +14,18 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 var _default = function _default(_ref) {
   var express = _ref.express,
       DonationsModel = _ref.DonationsModel,
-      jwt = _ref.jwt,
-      joi = _ref.joi;
+      joi = _ref.joi,
+      authController = _ref.authController,
+      trimRequest = _ref.trimRequest;
   var donationsController = (0, _donations["default"])({
     DonationsModel: DonationsModel
-  });
-  var authMiddleware = (0, _auth["default"])({
-    jwt: jwt
   });
   var donationMiddleware = (0, _donation["default"])({
     joi: joi
   });
   var router = express.Router();
-  router.get('/', authMiddleware.verifyToken, donationsController.getDonations);
-  router.post('/', donationMiddleware.validateAddNewDonation, authMiddleware.verifyToken, donationsController.addDonationRecord);
+  router.get('/', authController.verifyToken, donationsController.getDonations);
+  router.post('/', trimRequest.body, authController.verifyToken, donationMiddleware.validateAddNewDonation, donationsController.addDonationRecord);
   return router;
 };
 

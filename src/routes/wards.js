@@ -1,6 +1,5 @@
 import WardController from '../controllers/wards';
 import WardMiddleware from '../middlewares/ward';
-import AuthMiddleware from '../controllers/auth';
 
 export default ({
     express,
@@ -9,49 +8,48 @@ export default ({
     cloudinary,
     trimRequest,
     joi,
-    jwt,
+    authController,
 }) => {
     const wardController = WardController({
         WardModel,
         MedicalModel,
         cloudinary,
     });
-    const authMiddleware = AuthMiddleware({jwt});
     const wardMiddleware = WardMiddleware({joi});
     const router = express.Router();
 
-    router.get('/', authMiddleware.verifyToken, wardController.getAllWards);
+    router.get('/', authController.verifyToken, wardController.getAllWards);
 
     router.get(
         '/adopted',
-        authMiddleware.verifyToken,
+        authController.verifyToken,
         wardController.getAdoptedWards
     );
 
     router.get(
         '/:id',
-        authMiddleware.verifyToken,
+        authController.verifyToken,
         wardController.getSingleWard
     );
 
     router.post(
         '/',
-        wardMiddleware.validateAddNewWard,
         trimRequest.body,
-        authMiddleware.verifyToken,
+        authController.verifyToken,
+        wardMiddleware.validateAddNewWard,
         wardController.addWard
     );
 
     router.put(
         '/:id/adopt',
         trimRequest.body,
-        authMiddleware.verifyToken,
+        authController.verifyToken,
         wardController.updateAdoptionStatus
     );
 
     router.delete(
         '/:id',
-        authMiddleware.verifyToken,
+        authController.verifyToken,
         wardController.deleteWard
     );
 

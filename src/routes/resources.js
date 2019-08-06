@@ -1,29 +1,29 @@
 import ResourceController from '../controllers/resources';
-import AuthMiddleware from '../controllers/auth';
 
-export default ({express, ResourceModel, jwt}) => {
+export default ({express, ResourceModel, authController, trimRequest}) => {
     const resourceController = ResourceController({ResourceModel});
-    const authMiddleware = AuthMiddleware({jwt});
     const router = express.Router();
 
     router.get(
         '/',
-        authMiddleware.verifyToken,
+        authController.verifyToken,
         resourceController.getAllResources
     );
     router.post(
         '/',
-        authMiddleware.verifyToken,
+        trimRequest.body,
+        authController.verifyToken,
         resourceController.addToResources
     );
     router.put(
         '/:id',
-        authMiddleware.verifyToken,
+        trimRequest.body,
+        authController.verifyToken,
         resourceController.updateSingleResource
     );
     router.delete(
         '/:id',
-        authMiddleware.verifyToken,
+        authController.verifyToken,
         resourceController.deleteSingleResource
     );
 

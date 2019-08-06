@@ -65,10 +65,13 @@ var _timelines = _interopRequireDefault(require("./routes/timelines"));
 
 var _visits = _interopRequireDefault(require("./routes/visits"));
 
+var _auth2 = _interopRequireDefault(require("./controllers/auth"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 //Models
 //Routes
+//Controllers
 _dotenv["default"].config();
 
 var URL_PREFIX = '/api/v1';
@@ -118,6 +121,10 @@ var timelineModel = (0, _timeline["default"])({
   Sequelize: _sequelize["default"],
   db: db,
   Ward: wardModel
+}); //Controller Init
+
+var authController = (0, _auth2["default"])({
+  jwt: _jsonwebtoken["default"]
 }); // Cloudinary Config
 
 var CLOUDINARY_URL = process.env.CLOUDINARY_URL;
@@ -151,7 +158,7 @@ app.use(function (req, res, next) {
 app.use("".concat(URL_PREFIX, "/auth"), (0, _auth["default"])({
   express: _express["default"],
   AdminModel: adminModel,
-  jwt: _jsonwebtoken["default"],
+  authController: authController,
   bcrypt: _bcrypt["default"],
   trimRequest: _trimRequest["default"],
   joi: _joi["default"]
@@ -163,29 +170,32 @@ app.use("".concat(URL_PREFIX, "/wards"), (0, _wards2["default"])({
   MedicalModel: medicalModel,
   cloudinary: _cloudinary.v2,
   joi: _joi["default"],
-  jwt: _jsonwebtoken["default"],
+  authController: authController,
   trimRequest: _trimRequest["default"]
 })); // Visitors
 
 app.use("".concat(URL_PREFIX, "/visitors"), (0, _visitors2["default"])({
   express: _express["default"],
   VisitorModel: visitorModel,
+  trimRequest: _trimRequest["default"],
   joi: _joi["default"],
-  jwt: _jsonwebtoken["default"]
+  authController: authController
 })); // Donations
 
 app.use("".concat(URL_PREFIX, "/donations"), (0, _donations2["default"])({
   express: _express["default"],
   DonationsModel: donationsModel,
+  trimRequest: _trimRequest["default"],
   joi: _joi["default"],
-  jwt: _jsonwebtoken["default"]
+  authController: authController
 })); // Visits
 
 app.use("".concat(URL_PREFIX, "/visits"), (0, _visits["default"])({
   express: _express["default"],
   VisitModel: visitsModel,
+  trimRequest: _trimRequest["default"],
   joi: _joi["default"],
-  jwt: _jsonwebtoken["default"]
+  authController: authController
 })); // Timeline
 
 app.use("".concat(URL_PREFIX, "/timelines"), (0, _timelines["default"])({
@@ -194,14 +204,16 @@ app.use("".concat(URL_PREFIX, "/timelines"), (0, _timelines["default"])({
   WardModel: wardModel,
   cloudinary: _cloudinary.v2,
   joi: _joi["default"],
-  jwt: _jsonwebtoken["default"]
+  trimRequest: _trimRequest["default"],
+  authController: authController
 })); // Resource
 
 app.use("".concat(URL_PREFIX, "/resources"), (0, _resources2["default"])({
   express: _express["default"],
   ResouceModel: resourcesModel,
   joi: _joi["default"],
-  jwt: _jsonwebtoken["default"]
+  trimRequest: _trimRequest["default"],
+  authController: authController
 }));
 app.use("".concat(URL_PREFIX, "/endpoints"), function (req, res) {
   return res.status(200).json((0, _expressListEndpoints["default"])(app));

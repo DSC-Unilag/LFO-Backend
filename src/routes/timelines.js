@@ -1,37 +1,45 @@
 import TimelineController from '../controllers/timelines';
-import AuthMiddleware from '../controllers/auth';
 import TimelineMiddleware from '../middlewares/timeline';
 
-export default ({express, WardModel, cloudinary, TimelineModel, jwt, joi}) => {
+export default ({
+    express,
+    WardModel,
+    cloudinary,
+    TimelineModel,
+    joi,
+    authController,
+    trimRequest,
+}) => {
     const timelineController = TimelineController({
         WardModel,
         TimelineModel,
         cloudinary,
     });
-    const authMiddleware = AuthMiddleware({jwt});
     const timelineMiddleware = TimelineMiddleware({joi});
     const router = express.Router();
 
     router.get(
         '/:wardId',
-        authMiddleware.verifyToken,
+        authController.verifyToken,
         timelineController.getAllTimelineForWard
     );
     router.post(
         '/:wardId',
+        trimRequest.body,
+        authController.verifyToken,
         timelineMiddleware.validateAddNewTimeline,
-        authMiddleware.verifyToken,
         timelineController.addNewTimelineForWard
     );
     router.put(
         '/:wardId/:id',
+        trimRequest.body,
+        authController.verifyToken,
         timelineMiddleware.validateUpdateTimeline,
-        authMiddleware.verifyToken,
         timelineController.updateTimelineEntryForWard
     );
     router.delete(
         '/:wardId/:id',
-        authMiddleware.verifyToken,
+        authController.verifyToken,
         timelineController.deleteSingleTimelineEntryForWard
     );
 

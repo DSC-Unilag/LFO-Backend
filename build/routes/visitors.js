@@ -7,8 +7,6 @@ exports["default"] = void 0;
 
 var _visitors = _interopRequireDefault(require("../controllers/visitors"));
 
-var _auth = _interopRequireDefault(require("../controllers/auth"));
-
 var _visitors2 = _interopRequireDefault(require("../middlewares/visitors"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
@@ -16,21 +14,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 var _default = function _default(_ref) {
   var express = _ref.express,
       VisitorModel = _ref.VisitorModel,
-      jwt = _ref.jwt,
-      joi = _ref.joi;
+      joi = _ref.joi,
+      authController = _ref.authController,
+      trimRequest = _ref.trimRequest;
   var visitorController = (0, _visitors["default"])({
     VisitorModel: VisitorModel
-  });
-  var authMiddleware = (0, _auth["default"])({
-    jwt: jwt
   });
   var visitorMiddleware = (0, _visitors2["default"])({
     joi: joi
   });
   var router = express.Router();
-  router.get('/', authMiddleware.verifyToken, visitorController.getAllVisitors);
-  router.post('/', visitorMiddleware.validateAddNewVisitor, authMiddleware.verifyToken, visitorController.addVisitor);
-  router.get('/:id', authMiddleware.verifyToken, visitorController.getSingleVisitor);
+  router.get('/', authController.verifyToken, visitorController.getAllVisitors);
+  router.post('/', trimRequest.body, authController.verifyToken, visitorMiddleware.validateAddNewVisitor, visitorController.addVisitor);
+  router.get('/:id', authController.verifyToken, visitorController.getSingleVisitor);
   return router;
 };
 

@@ -1,27 +1,26 @@
 import VisitorController from '../controllers/visitors';
-import AuthMiddleware from '../controllers/auth';
 import VisitorMiddleware from '../middlewares/visitors';
 
-export default ({express, VisitorModel, jwt, joi}) => {
+export default ({express, VisitorModel, joi, authController, trimRequest}) => {
     const visitorController = VisitorController({VisitorModel});
-    const authMiddleware = AuthMiddleware({jwt});
     const visitorMiddleware = VisitorMiddleware({joi});
     const router = express.Router();
 
     router.get(
         '/',
-        authMiddleware.verifyToken,
+        authController.verifyToken,
         visitorController.getAllVisitors
     );
     router.post(
         '/',
+        trimRequest.body,
+        authController.verifyToken,
         visitorMiddleware.validateAddNewVisitor,
-        authMiddleware.verifyToken,
         visitorController.addVisitor
     );
     router.get(
         '/:id',
-        authMiddleware.verifyToken,
+        authController.verifyToken,
         visitorController.getSingleVisitor
     );
 

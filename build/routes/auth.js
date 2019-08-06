@@ -7,8 +7,6 @@ exports["default"] = void 0;
 
 var _admin = _interopRequireDefault(require("../controllers/admin"));
 
-var _auth = _interopRequireDefault(require("../controllers/auth"));
-
 var _admin2 = _interopRequireDefault(require("../middlewares/admin"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
@@ -16,24 +14,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 var _default = function _default(_ref) {
   var express = _ref.express,
       AdminModel = _ref.AdminModel,
-      jwt = _ref.jwt,
       bcrypt = _ref.bcrypt,
       trimRequest = _ref.trimRequest,
-      joi = _ref.joi;
-  var authMiddleware = (0, _auth["default"])({
-    jwt: jwt
-  });
+      joi = _ref.joi,
+      authController = _ref.authController;
   var adminMiddleware = (0, _admin2["default"])({
     joi: joi
   });
   var adminController = (0, _admin["default"])({
     AdminModel: AdminModel,
     bcrypt: bcrypt,
-    authMiddleware: authMiddleware
+    authController: authController
   });
   var router = express.Router();
-  router.post('/signup', adminMiddleware.validateSignUp, trimRequest.body, authMiddleware.signAdminToken, adminController.adminSignup);
-  router.post('/login', adminMiddleware.validateLogin, trimRequest.body, authMiddleware.verifyToken, adminController.adminLogin);
+  router.post('/signup', trimRequest.body, adminMiddleware.validateSignUp, adminController.adminSignup);
+  router.post('/login', trimRequest.body, adminMiddleware.validateLogin, authController.verifyToken, adminController.adminLogin);
   return router;
 };
 
