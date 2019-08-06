@@ -1,4 +1,4 @@
-import {ApiError, handleApiError} from '../util/logger/api';
+import {handleApiError} from '../util/logger/api';
 
 export default ({DonationsModel}) => {
     const getDonations = async (req, res) => {

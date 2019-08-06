@@ -10,7 +10,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 var _default = function _default(_ref) {
-  var joi = _ref.joi;
+  var Joi = _ref.joi;
 
   var validateAddNewResource =
   /*#__PURE__*/
@@ -42,7 +42,7 @@ var _default = function _default(_ref) {
               _context.t0 = _context["catch"](0);
               return _context.abrupt("return", res.status(400).json({
                 status: 'error',
-                message: String(_context.t0.details[0].message),
+                message: _context.t0.message,
                 type: 'validation'
               }));
 
@@ -89,7 +89,7 @@ var _default = function _default(_ref) {
               _context2.t0 = _context2["catch"](0);
               return _context2.abrupt("return", res.status(400).json({
                 status: 'error',
-                message: String(_context2.t0.details[0].message),
+                message: _context2.t0.message,
                 type: 'validation'
               }));
 

@@ -23,7 +23,6 @@ import visitors from './models/visitors';
 import resources from './models/resources';
 import timelines from './models/timeline';
 import donations from './models/donations';
-import visits from './models/visits.js';
 
 //Routes
 import authRouter from './routes/auth';

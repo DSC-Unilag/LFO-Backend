@@ -1,4 +1,4 @@
-export default ({joi}) => {
+export default ({joi: Joi}) => {
     const validateSignUp = async (req, res, next) => {
         try {
             const schema = {
@@ -18,7 +18,7 @@ export default ({joi}) => {
         } catch (err) {
             return res.status(400).json({
                 status: 'error',
-                message: String(err.details[0].message),
+                message: err.message,
                 type: 'validation',
             });
         }
@@ -39,7 +39,7 @@ export default ({joi}) => {
         } catch (err) {
             return res.status(400).json({
                 status: 'error',
-                message: String(err.details[0].message),
+                message: err.message,
                 type: 'validation',
             });
         }

@@ -51,8 +51,6 @@ var _timeline = _interopRequireDefault(require("./models/timeline"));
 
 var _donations = _interopRequireDefault(require("./models/donations"));
 
-var _visits = _interopRequireDefault(require("./models/visits.js"));
-
 var _auth = _interopRequireDefault(require("./routes/auth"));
 
 var _wards2 = _interopRequireDefault(require("./routes/wards"));
@@ -65,7 +63,7 @@ var _resources2 = _interopRequireDefault(require("./routes/resources"));
 
 var _timelines = _interopRequireDefault(require("./routes/timelines"));
 
-var _visits2 = _interopRequireDefault(require("./routes/visits"));
+var _visits = _interopRequireDefault(require("./routes/visits"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -183,7 +181,7 @@ app.use("".concat(URL_PREFIX, "/donations"), (0, _donations2["default"])({
   jwt: _jsonwebtoken["default"]
 })); // Visits
 
-app.use("".concat(URL_PREFIX, "/visits"), (0, _visits2["default"])({
+app.use("".concat(URL_PREFIX, "/visits"), (0, _visits["default"])({
   express: _express["default"],
   VisitModel: visitsModel,
   joi: _joi["default"],

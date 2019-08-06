@@ -38,10 +38,10 @@ var _default = function _default(_ref) {
                 break;
               }
 
-              return _context.abrupt("return", (res, status(400).json({
+              return _context.abrupt("return", res.status(400).json({
                 status: 'error',
                 message: 'No Auth Token Provided'
-              })));
+              }));
 
             case 3:
               token = token.slice(7, token.length);
