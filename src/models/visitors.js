@@ -1,29 +1,32 @@
 export default ({Sequelize, db}) => {
-    const Admin = db.define('admin', {
+    const Visitor = db.define('visitor', {
         id: {
             type: Sequelize.INTEGER,
             autoIncrement: true,
             allowNull: false,
             primaryKey: true,
         },
-        name: {
+        fullName: {
             type: Sequelize.STRING,
             allowNull: false,
         },
         email: {
             type: Sequelize.STRING,
             allowNull: false,
-            unique: true,
         },
         phone: {
             type: Sequelize.STRING,
             allowNull: false,
         },
-        password: {
+        date: {
+            type: Sequelize.STRING,
+            allowNull: false,
+        },
+        description: {
             type: Sequelize.STRING,
             allowNull: false,
         },
     });
 
-    return Admin;
+    return Visitor;
 };

@@ -1,29 +1,26 @@
 export default ({Sequelize, db}) => {
-    const Admin = db.define('admin', {
+    const Resource = db.define('resource', {
         id: {
             type: Sequelize.INTEGER,
             autoIncrement: true,
             allowNull: false,
             primaryKey: true,
         },
-        name: {
+        description: {
             type: Sequelize.STRING,
             allowNull: false,
         },
-        email: {
-            type: Sequelize.STRING,
-            allowNull: false,
-            unique: true,
-        },
-        phone: {
+        type: {
             type: Sequelize.STRING,
             allowNull: false,
         },
-        password: {
-            type: Sequelize.STRING,
+        quantity: {
+            type: Sequelize.INTEGER,
             allowNull: false,
         },
+        createdAt: Sequelize.DATEONLY,
+        updatedAt: Sequelize.DATEONLY,
     });
 
-    return Admin;
+    return Resource;
 };

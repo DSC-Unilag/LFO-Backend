@@ -1,5 +1,5 @@
 export default ({Sequelize, db}) => {
-    const Admin = db.define('admin', {
+    const Donations = db.define('donations', {
         id: {
             type: Sequelize.INTEGER,
             autoIncrement: true,
@@ -10,20 +10,19 @@ export default ({Sequelize, db}) => {
             type: Sequelize.STRING,
             allowNull: false,
         },
-        email: {
+        amount: {
+            type: Sequelize.INTEGER,
+            allowNull: false,
+        },
+        description: {
             type: Sequelize.STRING,
             allowNull: false,
-            unique: true,
         },
         phone: {
             type: Sequelize.STRING,
             allowNull: false,
         },
-        password: {
-            type: Sequelize.STRING,
-            allowNull: false,
-        },
     });
 
-    return Admin;
+    return Donations;
 };
