@@ -219,7 +219,7 @@ app.use(
     `${URL_PREFIX}/resources`,
     resourceRouter({
         express,
-        ResouceModel: resourcesModel,
+        ResourceModel: resourcesModel,
         joi,
         trimRequest,
         authController,

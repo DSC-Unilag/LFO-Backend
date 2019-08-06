@@ -6,7 +6,7 @@ export default ({DonationsModel}) => {
             const getDonations = await DonationsModel.findAll();
             return res.status(200).json({
                 status: 'success',
-                message: 'Found the Data in the Model',
+                message: 'Donations Retrieved',
                 data: getDonations,
             });
         } catch (error) {
@@ -25,7 +25,7 @@ export default ({DonationsModel}) => {
             });
             return res.status(201).json({
                 status: 'success',
-                message: 'retrieved the donations records.',
+                message: 'Donation Record Created',
                 data: donationRecord,
             });
         } catch (error) {
